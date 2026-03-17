@@ -7,71 +7,70 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-// Check if user is logged in
 const isLoggedIn = () => {
-  const token = localStorage.getItem("token");
-  return token !== null;
+  return !!localStorage.getItem("token");
 };
 
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-  if (!isLoggedIn()) {
-    return <Navigate to="/login" />;
-  }
-  return children;
-};
+function Layout({ children }) {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  );
+}
 
 function App() {
   return (
     <Router>
       <Routes>
 
-        {/* Public Routes */}
+        {/* Public routes */}
         <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
 
-        {/* Protected Routes */}
+        {/* Protected routes */}
         <Route
           path="/home"
           element={
-            <ProtectedRoute>
-              <>
-                <Navbar />
+            isLoggedIn() ? (
+              <Layout>
                 <Home />
-                <Footer />
-              </>
-            </ProtectedRoute>
+              </Layout>
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
 
         <Route
           path="/journal"
           element={
-            <ProtectedRoute>
-              <>
-                <Navbar />
+            isLoggedIn() ? (
+              <Layout>
                 <Journal />
-                <Footer />
-              </>
-            </ProtectedRoute>
+              </Layout>
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
 
         <Route
           path="/about"
           element={
-            <ProtectedRoute>
-              <>
-                <Navbar />
+            isLoggedIn() ? (
+              <Layout>
                 <About />
-                <Footer />
-              </>
-            </ProtectedRoute>
+              </Layout>
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
 
-        {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>

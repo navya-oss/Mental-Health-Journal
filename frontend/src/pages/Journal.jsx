@@ -199,7 +199,6 @@ function Journal() {
 
   return (
     <div className="bg-black min-h-screen flex flex-col">
-      <Navbar />
       <div className="flex-grow relative flex flex-col px-6">
         <div className="flex-grow flex flex-col justify-start max-w-3xl mx-auto w-full space-y-4 mt-6 overflow-y-auto">
           {entries.length === 0 && (
@@ -292,7 +291,6 @@ function Journal() {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 }
