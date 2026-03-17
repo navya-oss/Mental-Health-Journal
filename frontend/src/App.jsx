@@ -7,32 +7,73 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+// Check if user is logged in
 const isLoggedIn = () => {
-  return !!localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  return token !== null;
+};
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  if (!isLoggedIn()) {
+    return <Navigate to="/login" />;
+  }
+  return children;
 };
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
 
+        {/* Public Routes */}
+        <Route path="/" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected Routes */}
         <Route
           path="/home"
-          element={isLoggedIn() ? <Home /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/journal"
-          element={isLoggedIn() ? <Journal /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/about"
-          element={isLoggedIn() ? <About /> : <Navigate to="/login" />}
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Home />
+                <Footer />
+              </>
+            </ProtectedRoute>
+          }
         />
 
+        <Route
+          path="/journal"
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <Journal />
+                <Footer />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/about"
+          element={
+            <ProtectedRoute>
+              <>
+                <Navbar />
+                <About />
+                <Footer />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" />} />
+
       </Routes>
     </Router>
   );

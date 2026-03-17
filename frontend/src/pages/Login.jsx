@@ -13,7 +13,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post("https://mental-health-journal-1-dd0v.onrender.com/api/auth/login", {
         username,
         password,
       });
@@ -25,10 +25,9 @@ function Login() {
       setMessage(res.data.message);
       setIsError(false);
 
-      // Navigate to home after a short delay
-      setTimeout(() => {
-        navigate("/home");
-      }, 800);
+      // Navigate to home
+      navigate("/home");
+      
     } catch (err) {
       setMessage(err.response?.data?.message || "Login failed");
       setIsError(true);

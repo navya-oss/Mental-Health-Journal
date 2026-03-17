@@ -16,8 +16,8 @@ function Journal() {
   const messagesEndRef = useRef(null);
 
   const token = localStorage.getItem("token");
-  const API_URL = "http://localhost:5000/api/journal/entries";
-  const AI_URL = "http://localhost:5000/ai/reply";
+  const API_URL = "https://mental-health-journal-1-dd0v.onrender.com/api/journal";
+  const AI_URL = "https://mental-health-journal-1-dd0v.onrender.com/ai/reply";
 
   // ✅ Load voices
   const [voices, setVoices] = useState([]);
