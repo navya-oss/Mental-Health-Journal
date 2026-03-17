@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: "https://mental-health-journal-1-dd0v.onrender.com",credentials: true }));
+app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
